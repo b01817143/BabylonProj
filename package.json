@@ -17,5 +17,18 @@
     "@babylonjs/havok": "^1.3.10",
     "@babylonjs/loaders": "^8.40.0",
     "@babylonjs/materials": "^8.40.0"
-  }
+  },
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b01817143/BabylonProj.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/b01817143/BabylonProj/issues"
+  },
+  "homepage": "https://github.com/b01817143/BabylonProj#readme"
 }
