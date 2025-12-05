@@ -18,5 +18,5 @@
     "noImplicitReturns": true, // raises an error for functions that return nothing
     "skipLibCheck": true // skip type-checking of .d.ts files (it speeds up transpiling)
   },
-"include": ["Element1/src/*.ts", "Element2/src/*.ts", "Element3/src/*.ts", "Element4/src*.ts", "Element5/src/*.ts"]
+"include": ["Element1/src/*.ts", "Element2/src/*.ts", "Element3/src/*.ts", "Element4/src/*.ts", "Element5/src/*.ts"]
 }
