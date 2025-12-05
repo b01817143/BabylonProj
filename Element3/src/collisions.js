@@ -1,4 +1,4 @@
-import { setText } from "./gui";
+import { setText } from "./gui.js";
 const collideCB = (collision) => {
     console.log("collideCB", collision.collider.transformNode.name, collision.collidedAgainst.transformNode.name);
 };

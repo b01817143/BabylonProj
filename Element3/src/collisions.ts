@@ -1,6 +1,6 @@
 import { PhysicsAggregate } from "@babylonjs/core";
-import { SceneData } from "./interfaces";
-import { gui, setText } from "./gui";
+import { SceneData } from "./interfaces.js";
+import { gui, setText } from "./gui.js";
 
 // Collision callback function
 const collideCB = (collision: {

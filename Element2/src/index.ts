@@ -1,10 +1,10 @@
 import { Engine } from "@babylonjs/core";
-import createStartScene from "./createStartScene";
+import createStartScene from "./createStartScene.js";
 import './main.css';
-import {createCharacterController} from "./createCharacterController";
-import { gui } from "./gui";
-import { setupCollisions } from "./collisions";
-import { SceneData } from "./interfaces";
+import {createCharacterController} from "./createCharacterController.js";
+import { gui } from "./gui.js";
+import { setupCollisions } from "./collisions.js";
+import { SceneData } from "./interfaces.js";
 
 const CanvasName = "renderCanvas";
 

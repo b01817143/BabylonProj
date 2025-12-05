@@ -8,11 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { Engine } from "@babylonjs/core";
-import createStartScene from "./createStartScene";
+import createStartScene from "./createStartScene.js";
 import './main.css';
-import { createCharacterController } from "./createCharacterController";
-import { gui } from "./gui";
-import { setupCollisions } from "./collisions";
+import { createCharacterController } from "./createCharacterController.js";
+import { gui } from "./gui.js";
+import { setupCollisions } from "./collisions.js";
 const CanvasName = "renderCanvas";
 let canvas = document.createElement("canvas");
 canvas.id = CanvasName;
