@@ -1,4 +1,4 @@
-import {
+import type {
   Scene,
   Mesh,
   HemisphericLight,
@@ -6,8 +6,9 @@ import {
 } from "@babylonjs/core";
 
 export interface SceneData {
-      scene: Scene;
-      light?: HemisphericLight;
-      ground?: Mesh;
-      camera?: Camera;
+  scene: Scene;
+  light?: HemisphericLight;
+  ground?: Mesh;
+  camera?: Camera;
+  skybox?: Mesh;
 }

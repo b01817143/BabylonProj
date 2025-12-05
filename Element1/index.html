@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Player01</title>
-    </head>
-       <body>
-  <canvas id="renderCanvas"></canvas>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Element1</title>
 
-  <!-- 1) Map @babylonjs/* and tslib to real CDN URLs -->
-  <script type="importmap">
-  {
-    "imports": {
-      "@babylonjs/core": "https://cdn.jsdelivr.net/npm/@babylonjs/core@8.39.2/+esm",
-      "@babylonjs/loaders": "https://cdn.jsdelivr.net/npm/@babylonjs/loaders@8.39.2/+esm",
-      "@babylonjs/materials": "https://cdn.jsdelivr.net/npm/@babylonjs/materials@8.39.2/+esm",
-      "tslib": "https://cdn.jsdelivr.net/npm/tslib@2.8.1/tslib.es6.mjs"
-    }
-  }
-  </script>
+    <!-- Main stylesheet compiled by your bundler / TS config -->
+    <link rel="stylesheet" href="./src/main.css" />
+  </head>
+  <body>
+    <!-- No canvas here – index.ts will create it dynamically -->
 
-  <!-- 2) Then load your compiled JS as a module -->
-  <script type="module" src="./src/index.js"></script>
-</body>
+    <!-- Babylon global namespace -->
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <!-- Optional extras (only keep what you actually use) -->
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+
+    <!-- Your compiled entry point -->
+    <script type="module" src="./src/index.js"></script>
+  </body>
 </html>

@@ -1,223 +1,232 @@
-//import "@babylonjs/core/Debug/debugLayer";
-//import "@babylonjs/inspector";
-import {
-    Scene,
-    ArcRotateCamera,
-    Vector3,
-    HemisphericLight,
-    StandardMaterial,
-    MeshBuilder,
-    Mesh,
-    Light,
-    Camera,
-    Texture,
-    Engine,
-  } from "@babylonjs/core";
-  
-    function createSphere(scene: Scene) {
-    let sphere = MeshBuilder.CreateSphere(
-      "sphere",
-      { diameter: 2, segments: 32 },
-      scene,
-    );
+// createstartscene.ts (Element5)
 
-     // Create a standard material
-    const material = new StandardMaterial("sphereMat", scene);
+// Global BabylonJS from script tag
+declare const BABYLON: any;
 
-    // Load a texture
-    material.diffuseTexture = new Texture("./textures/bowling.webp", scene);
+// Type-only imports (no JS emitted → safe for GitHub Pages)
+import type {
+  Scene,
+  ArcRotateCamera,
+  Vector3,
+  HemisphericLight,
+  StandardMaterial,
+  MeshBuilder,
+  Mesh,
+  Light,
+  Camera,
+  Texture,
+  Engine,
+} from "@babylonjs/core";
 
-    // Assign the material to the cylinder
-    sphere.material = material;
+function createSphere(scene: Scene) {
+  const sphere: Mesh = BABYLON.MeshBuilder.CreateSphere(
+    "sphere",
+    { diameter: 2, segments: 32 },
+    scene
+  );
 
-    sphere.position.x = 0;
-    sphere.position.y = 1;
+  const material: StandardMaterial = new BABYLON.StandardMaterial(
+    "sphereMat",
+    scene
+  );
+  material.diffuseTexture = new BABYLON.Texture(
+    "./textures/bowling.webp",
+    scene
+  );
+  sphere.material = material;
 
-     // Rotation speed (radians per frame)
-    const rotationSpeed = 0.01;
+  sphere.position.x = 0;
+  sphere.position.y = 1;
 
-    // Rotate the cone on each frame
-    scene.registerBeforeRender(() => {
-        sphere.rotation.y += rotationSpeed;
-    });
+  const rotationSpeed = 0.01;
+  scene.registerBeforeRender(() => {
+    sphere.rotation.y += rotationSpeed;
+  });
 
-    return sphere;
-  }
+  return sphere;
+}
 
-  function createBox(scene: Scene) {
-    let box = MeshBuilder.CreateBox("box",{size: 1}, scene);
-    box.position.x = 3;
-    box.position.y = 1;
+function createBox(scene: Scene) {
+  const box: Mesh = BABYLON.MeshBuilder.CreateBox(
+    "box",
+    { size: 1 },
+    scene
+  );
+  box.position.x = 3;
+  box.position.y = 1;
 
-     // Create a standard material
+  const material: StandardMaterial = new BABYLON.StandardMaterial(
+    "boxMat",
+    scene
+  );
+  material.diffuseTexture = new BABYLON.Texture(
+    "./textures/cardboard.jpg",
+    scene
+  );
+  box.material = material;
 
-    const material = new StandardMaterial("boxMat", scene);
+  const rotationSpeed = 0.01;
+  scene.registerBeforeRender(() => {
+    box.rotation.y += rotationSpeed;
+  });
 
-    // Load a texture
-    material.diffuseTexture = new Texture("./textures/cardboard.jpg", scene);
-
-    // Assign the material to the cylinder
-    box.material = material;
-
-     // Rotation speed (radians per frame)
-    const rotationSpeed = 0.01;
-
-    // Rotate the cone on each frame
-    scene.registerBeforeRender(() => {
-        box.rotation.y += rotationSpeed;
-    });
-
-    return box;
-  }
+  return box;
+}
 
 function createCylinder(scene: Scene) {
-    // Create the cylinder
-    const cylinder = MeshBuilder.CreateCylinder("cylinder", { diameter: 1, tessellation: 24 }, scene);
+  const cylinder: Mesh = BABYLON.MeshBuilder.CreateCylinder(
+    "cylinder",
+    { diameter: 1, tessellation: 24 },
+    scene
+  );
 
-    // Position the cylinder
-    cylinder.position = new Vector3(5, 1, 0);
+  cylinder.position = new BABYLON.Vector3(5, 1, 0);
 
-    // Create a standard material
-    const material = new StandardMaterial("cylinderMat", scene);
+  const material: StandardMaterial = new BABYLON.StandardMaterial(
+    "cylinderMat",
+    scene
+  );
+  material.diffuseTexture = new BABYLON.Texture(
+    "./textures/propane.jpg",
+    scene
+  );
+  cylinder.material = material;
 
-    // Load a texture
-    material.diffuseTexture = new Texture("./textures/propane.jpg", scene);
+  const rotationSpeed = 0.01;
+  scene.registerBeforeRender(() => {
+    cylinder.rotation.y += rotationSpeed;
+  });
 
-    // Assign the material to the cylinder
-    cylinder.material = material;
-
-     // Rotation speed (radians per frame)
-    const rotationSpeed = 0.01;
-
-    // Rotate the cone on each frame
-    scene.registerBeforeRender(() => {
-        cylinder.rotation.y += rotationSpeed;
-    });
-
-    return cylinder;
+  return cylinder;
 }
 
-  function createCone(scene: Scene) {
-    const cone = MeshBuilder.CreateCylinder("cone",{diameterTop:0, height:2, tessellation:24, arc:0.5}, scene);
-    cone.position.x = 7;
-    cone.position.y = 1;
+function createCone(scene: Scene) {
+  const cone: Mesh = BABYLON.MeshBuilder.CreateCylinder(
+    "cone",
+    { diameterTop: 0, height: 2, tessellation: 24, arc: 0.5 },
+    scene
+  );
+  cone.position.x = 7;
+  cone.position.y = 1;
 
-    // Create a standard material
-    const material = new StandardMaterial("coneMat", scene);
+  const material: StandardMaterial = new BABYLON.StandardMaterial(
+    "coneMat",
+    scene
+  );
+  material.diffuseTexture = new BABYLON.Texture(
+    "./textures/road-cone.jpg",
+    scene
+  );
+  cone.material = material;
 
-    // Load a texture
-    material.diffuseTexture = new Texture("./textures/road-cone.jpg", scene);
+  const rotationSpeed = 0.01;
+  scene.registerBeforeRender(() => {
+    cone.rotation.y += rotationSpeed;
+  });
 
-    // Assign the material to the cylinder
-    cone.material = material;
-
-     // Rotation speed (radians per frame)
-    const rotationSpeed = 0.01;
-
-    // Rotate the cone on each frame
-    scene.registerBeforeRender(() => {
-        cone.rotation.y += rotationSpeed;
-    });
-    return cone;
-
-    
-  }
-
- function createTriangle(scene: Scene) {
-    const cone = MeshBuilder.CreateCylinder("tri", { height: 2, tessellation: 3 }, scene);
-    cone.position.x = 9;
-    cone.position.y = 1;
-
-    // Create a standard material
-    const material = new StandardMaterial("coneMat", scene);
-
-    // Load a texture
-    material.diffuseTexture = new Texture("./textures/prism.jpg", scene);
-
-    // Assign the material to the cylinder
-    cone.material = material;
-
-    // Rotation speed (radians per frame)
-    const rotationSpeed = 0.01;
-
-    // Rotate the cone on each frame
-    scene.registerBeforeRender(() => {
-        cone.rotation.y += rotationSpeed;
-    });
-
-    return cone;
+  return cone;
 }
 
-  
-  
-  
-  function createLight(scene: Scene) {
-    const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
-    light.intensity = 0.7;
-    return light;
-  }
-  
+function createTriangle(scene: Scene) {
+  const tri: Mesh = BABYLON.MeshBuilder.CreateCylinder(
+    "tri",
+    { height: 2, tessellation: 3 },
+    scene
+  );
+  tri.position.x = 9;
+  tri.position.y = 1;
 
-  
-  function createGround(scene: Scene) {
-    let ground = MeshBuilder.CreateGround(
-      "ground",
-      { width: 6, height: 6 },
-      scene,
-    );
+  const material: StandardMaterial = new BABYLON.StandardMaterial(
+    "coneMat",
+    scene
+  );
+  material.diffuseTexture = new BABYLON.Texture(
+    "./textures/prism.jpg",
+    scene
+  );
+  tri.material = material;
 
-     // Create a standard material
-    const material = new StandardMaterial("groundMat", scene);
+  const rotationSpeed = 0.01;
+  scene.registerBeforeRender(() => {
+    tri.rotation.y += rotationSpeed;
+  });
 
-    // Load a texture
-    material.diffuseTexture = new Texture("./textures/concrete-.jpg", scene);
+  return tri;
+}
 
-    // Assign the material to the cylinder
-    ground.material = material;
-    return ground;
+function createLight(scene: Scene) {
+  const light: HemisphericLight = new BABYLON.HemisphericLight(
+    "light",
+    new BABYLON.Vector3(0, 1, 0),
+    scene
+  );
+  light.intensity = 0.7;
+  return light;
+}
+
+function createGround(scene: Scene) {
+  const ground: Mesh = BABYLON.MeshBuilder.CreateGround(
+    "ground",
+    { width: 6, height: 6 },
+    scene
+  );
+
+  const material: StandardMaterial = new BABYLON.StandardMaterial(
+    "groundMat",
+    scene
+  );
+  material.diffuseTexture = new BABYLON.Texture(
+    "./textures/concrete-.jpg",
+    scene
+  );
+  ground.material = material;
+
+  return ground;
+}
+
+function createArcRotateCamera(scene: Scene) {
+  let camAlpha = -Math.PI / 2,
+    camBeta = Math.PI / 2.5,
+    camDist = 10,
+    camTarget = new BABYLON.Vector3(0, 0, 0);
+
+  const camera: ArcRotateCamera = new BABYLON.ArcRotateCamera(
+    "camera1",
+    camAlpha,
+    camBeta,
+    camDist,
+    camTarget,
+    scene
+  );
+  camera.attachControl(true);
+  return camera;
+}
+
+export default function createStartScene(engine: Engine) {
+  interface SceneData {
+    scene: Scene;
+    box?: Mesh;
+    sphere?: Mesh;
+    cylinder?: Mesh;
+    cone?: Mesh;
+    triangle?: Mesh;
+    light?: Light;
+    ground?: Mesh;
+    camera?: Camera;
   }
-  
-  function createArcRotateCamera(scene: Scene) {
-    let camAlpha = -Math.PI / 2,
-      camBeta = Math.PI / 2.5,
-      camDist = 10,
-      camTarget = new Vector3(0, 0, 0);
-    let camera = new ArcRotateCamera(
-      "camera1",
-      camAlpha,
-      camBeta,
-      camDist,
-      camTarget,
-      scene,
-    );
-    camera.attachControl(true);
-    return camera;
-  }
-  
-  export default function createStartScene(engine: Engine) {
-    interface SceneData {
-      scene: Scene;
-      box?: Mesh;
-      sphere?: Mesh;
-      cylinder?: Mesh;
-      cone?: Mesh;
-      triangle?: Mesh;
-      light?: Light;
-      
-      ground?: Mesh;
-      camera?: Camera;
-    }
-  
-    let that: SceneData = { scene: new Scene(engine) };
-    //that.scene.debugLayer.show();
-  
-    that.box = createBox(that.scene);
-    that.sphere = createSphere(that.scene);
-    that.cylinder = createCylinder(that.scene);
-    that.cone = createCone(that.scene);
-    that.triangle = createTriangle(that.scene);
-    that.light = createLight(that.scene);
-    that.ground = createGround(that.scene);
-    that.camera = createArcRotateCamera(that.scene);
-    return that;
-  }
+
+  const scene: Scene = new BABYLON.Scene(engine);
+
+  const that: SceneData = { scene };
+
+  that.box = createBox(scene);
+  that.sphere = createSphere(scene);
+  that.cylinder = createCylinder(scene);
+  that.cone = createCone(scene);
+  that.triangle = createTriangle(scene);
+  that.light = createLight(scene);
+  that.ground = createGround(scene);
+  that.camera = createArcRotateCamera(scene);
+
+  return that;
+}

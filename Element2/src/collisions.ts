@@ -1,6 +1,8 @@
-import { PhysicsAggregate } from "@babylonjs/core";
-import { SceneData } from "./interfaces.js";
-import { gui, setText } from "./gui";
+// Element2/src/collisions.ts
+// Collision setup using SceneData; no direct runtime dependency on @babylonjs/core.
+
+import type { SceneData } from "./interfaces.js";
+import { gui, setText } from "./gui.js";
 
 // Collision callback function
 const collideCB = (collision: {
@@ -31,6 +33,7 @@ const collideCB1 = (collision: {
     collision.collider.transformNode.name,
     collision.collidedAgainst.transformNode.name
   );
+
   setText(collision.collider.transformNode.name, 1);
   setText(collision.collidedAgainst.transformNode.name, 2);
   setText(collision.point.x.toFixed(2), 3);
@@ -44,8 +47,6 @@ export function setupCollisions(sceneData: SceneData): void {
   const FILTER_GROUP_CUBE = 3;
   const FILTER_GROUP_OBSTACLE = 4;
   const FILTER_GROUP_PLAYER = 5;
-
-  // Apply masks and collisions to physics aggregates
 
   // === GROUND ===
   if (sceneData.ground?.physicsAggregate) {

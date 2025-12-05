@@ -1,5 +1,9 @@
-import { Scene } from "@babylonjs/core";
-import {
+// Tell TypeScript these globals exist at runtime (from <script> tags)
+declare const BABYLON: any;
+
+// Type-only imports (for IntelliSense only, removed in JS output)
+import type { Scene } from "@babylonjs/core";
+import type {
   Button,
   AdvancedDynamicTexture,
   TextBlock,
@@ -8,10 +12,10 @@ import {
   Rectangle,
 } from "@babylonjs/gui/2D";
 
-var text1!: TextBlock; // recieves external messages
-var text2!: TextBlock; // recieves external messages
-var text3!: TextBlock; // recieves external messages
-var text4!: TextBlock; // recieves external messages
+var text1!: TextBlock; // receives external messages
+var text2!: TextBlock;
+var text3!: TextBlock;
+var text4!: TextBlock;
 var heading1!: TextBlock;
 
 function createSceneButton(
@@ -19,9 +23,8 @@ function createSceneButton(
   index: string,
   x: string,
   y: string
-  //advtex: { addControl: (arg0: Button) => void }
 ) {
-  var button: Button = Button.CreateSimpleButton(name, index);
+  const button: Button = BABYLON.GUI.Button.CreateSimpleButton(name, index);
   button.left = x;
   button.top = y;
   button.width = "180px";
@@ -30,13 +33,14 @@ function createSceneButton(
   button.cornerRadius = 20;
   button.background = "green";
 
-  button.onPointerClickObservable.add(function () {
+  button.onPointerClickObservable.add(() => {
     console.log("click event");
-    let toggle: string =
-      button.textBlock!.text == "clicked" ? "Click me!" : "clicked";
+    const toggle: string =
+      button.textBlock!.text === "clicked" ? "Click me!" : "clicked";
     button.textBlock!.text = toggle;
     console.log(toggle);
   });
+
   return button;
 }
 
@@ -46,7 +50,7 @@ function createTextBlock(
   left: string,
   top: string
 ) {
-  let text: TextBlock = new TextBlock(name, index);
+  const text: TextBlock = new BABYLON.GUI.TextBlock(name, index);
   text.text = index;
   text.color = "white";
   text.fontSize = 24;
@@ -57,35 +61,35 @@ function createTextBlock(
   text.fontFamily = "Verdana";
   text.textWrapping = true;
   text.highlightColor = "red";
-  text.horizontalAlignment = TextBlock.HORIZONTAL_ALIGNMENT_CENTER;
-  text.verticalAlignment = TextBlock.VERTICAL_ALIGNMENT_CENTER;
+
+  // Use Control’s alignment constants from the global GUI namespace
+  text.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+  text.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+
   // event handling
-  text.onPointerEnterObservable.add(function () {
+  text.onPointerEnterObservable.add(() => {
     text.isHighlighted = true;
   });
-  text.onPointerOutObservable.add(function () {
+  text.onPointerOutObservable.add(() => {
     text.isHighlighted = false;
   });
+
   return text;
 }
 
 export function gui(scene: Scene): void {
-  // add a button
-  //https://doc.babylonjs.com/typedoc/modules/BABYLON.GUI  // GUI API
+  // Fullscreen GUI
+  const advancedTexture: AdvancedDynamicTexture =
+    BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI", true, scene);
 
-  let advancedTexture: AdvancedDynamicTexture =
-    AdvancedDynamicTexture.CreateFullscreenUI("myUI", true, scene);
-  let button1: Button = createSceneButton(
+  const button1: Button = createSceneButton(
     "button1",
     "Click Me!",
     "0px",
     "0px"
-    //advancedTexture
   );
-  //advancedTexture.addControl(button1); // button 1 could be added to the scene or grid
 
-  //add text block
-  //https://playground.babylonjs.com/#2ARI2W#10 //high resolution text//
+  // High-resolution GUI text
   scene.getEngine().setHardwareScalingLevel(1 / window.devicePixelRatio);
   advancedTexture.rootContainer.scaleX = window.devicePixelRatio;
   advancedTexture.rootContainer.scaleY = window.devicePixelRatio;
@@ -96,12 +100,8 @@ export function gui(scene: Scene): void {
   text3 = createTextBlock("text3", "Debug", "1px", "1px");
   text4 = createTextBlock("text4", "Debug", "1px", "1px");
 
-  // advancedTexture.addControl(this.heading1); // text1 block could be added to the scene or grid
-
-  //https://doc.babylonjs.com/features/featuresDeepDive/gui/gui#grid
-  // Create a grid, Pointer will then only apply to the grid and not the whole screen.
-
-  const grid = new Grid();
+  // Grid-based layout
+  const grid: Grid = new BABYLON.GUI.Grid();
   grid.addColumnDefinition(100, true);
   grid.addColumnDefinition(0.25);
   grid.addColumnDefinition(0.25);
@@ -111,36 +111,40 @@ export function gui(scene: Scene): void {
   grid.addRowDefinition(50, true);
   grid.addRowDefinition(50, true);
 
-  // This rect will be on first row and second column
-  const rect1 = new Rectangle();
-  rect1.background = "#76d56e88"; //rgba
+  const rect1: Rectangle = new BABYLON.GUI.Rectangle();
+  rect1.background = "#76d56e88";
   rect1.thickness = 0;
-  rect1.addControl(heading1); // rect is a container which can contain other controls
-  const rect2 = new Rectangle();
+  rect1.addControl(heading1);
+
+  const rect2: Rectangle = new BABYLON.GUI.Rectangle();
   rect2.background = "#60955b88";
   rect2.thickness = 0;
   rect2.addControl(button1);
-  const rect3 = new Rectangle();
+
+  const rect3: Rectangle = new BABYLON.GUI.Rectangle();
   rect3.background = "#76d56e88";
   rect3.thickness = 0;
-  //empty rect
-  const rect4 = new Rectangle();
+
+  const rect4: Rectangle = new BABYLON.GUI.Rectangle();
   rect4.background = "#60955b88";
   rect4.thickness = 0;
-  //empty rect
-  const rect5 = new Rectangle();
+
+  const rect5: Rectangle = new BABYLON.GUI.Rectangle();
   rect5.background = "#76d56e88";
   rect5.thickness = 0;
   rect5.addControl(text1);
-  const rect6 = new Rectangle();
+
+  const rect6: Rectangle = new BABYLON.GUI.Rectangle();
   rect6.background = "#60955b88";
   rect6.thickness = 0;
   rect6.addControl(text2);
-  const rect7 = new Rectangle();
+
+  const rect7: Rectangle = new BABYLON.GUI.Rectangle();
   rect7.background = "#76d56e88";
   rect7.thickness = 0;
   rect7.addControl(text3);
-  const rect8 = new Rectangle();
+
+  const rect8: Rectangle = new BABYLON.GUI.Rectangle();
   rect8.background = "#60955b88";
   rect8.thickness = 0;
   rect8.addControl(text4);
@@ -157,11 +161,11 @@ export function gui(scene: Scene): void {
   advancedTexture.addControl(grid);
 
   scene.registerBeforeRender(() => {
-    // cant get to gui
-    // let mystash = scene.getExternalData("stash") as { [key: string]: string };
+    // Example external data hooking (left commented out as in your original)
+    // const mystash = scene.getExternalData("stash") as { [key: string]: string };
     // try { text1.text = mystash.message; } catch {}
-    // try { text2.text = mystash.x; } catch {}// Desired direction
-    // try { text3.text = mystash.z; } catch {}// Desired direction
+    // try { text2.text = mystash.x; } catch {}
+    // try { text3.text = mystash.z; } catch {}
   });
 }
 
@@ -179,8 +183,7 @@ export function setText(newtext: string, index: number) {
     case 4:
       text4.text = newtext;
       break;
-
     default:
-    // code block
+      break;
   }
 }

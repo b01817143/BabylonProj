@@ -1,6 +1,11 @@
-import { PhysicsAggregate } from "@babylonjs/core";
-import { SceneData } from "./interfaces.js";
-import { gui, setText } from "./gui.js";
+// collisions.ts
+
+// Global BABYLON is available from script tags
+declare const BABYLON: any;
+
+// Type-only import for typings (no JS output)
+import type { SceneData } from "./interfaces.js";
+import { setText } from "./gui.js";
 
 // Collision callback function
 const collideCB = (collision: {
@@ -44,8 +49,6 @@ export function setupCollisions(sceneData: SceneData): void {
   const FILTER_GROUP_CUBE = 3;
   const FILTER_GROUP_OBSTACLE = 4;
   const FILTER_GROUP_PLAYER = 5;
-
-  // Apply masks and collisions to physics aggregates
 
   // === GROUND ===
   if (sceneData.ground?.physicsAggregate) {

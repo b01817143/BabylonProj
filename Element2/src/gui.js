@@ -1,11 +1,10 @@
-import { Button, AdvancedDynamicTexture, TextBlock, Grid, Rectangle, } from "@babylonjs/gui/2D";
 var text1;
 var text2;
 var text3;
 var text4;
 var heading1;
 function createSceneButton(name, index, x, y) {
-    var button = Button.CreateSimpleButton(name, index);
+    const button = BABYLON.GUI.Button.CreateSimpleButton(name, index);
     button.left = x;
     button.top = y;
     button.width = "180px";
@@ -13,16 +12,16 @@ function createSceneButton(name, index, x, y) {
     button.color = "white";
     button.cornerRadius = 20;
     button.background = "green";
-    button.onPointerClickObservable.add(function () {
+    button.onPointerClickObservable.add(() => {
         console.log("click event");
-        let toggle = button.textBlock.text == "clicked" ? "Click me!" : "clicked";
+        const toggle = button.textBlock.text === "clicked" ? "Click me!" : "clicked";
         button.textBlock.text = toggle;
         console.log(toggle);
     });
     return button;
 }
 function createTextBlock(name, index, left, top) {
-    let text = new TextBlock(name, index);
+    const text = new BABYLON.GUI.TextBlock(name, index);
     text.text = index;
     text.color = "white";
     text.fontSize = 24;
@@ -33,19 +32,19 @@ function createTextBlock(name, index, left, top) {
     text.fontFamily = "Verdana";
     text.textWrapping = true;
     text.highlightColor = "red";
-    text.horizontalAlignment = TextBlock.HORIZONTAL_ALIGNMENT_CENTER;
-    text.verticalAlignment = TextBlock.VERTICAL_ALIGNMENT_CENTER;
-    text.onPointerEnterObservable.add(function () {
+    text.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+    text.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
+    text.onPointerEnterObservable.add(() => {
         text.isHighlighted = true;
     });
-    text.onPointerOutObservable.add(function () {
+    text.onPointerOutObservable.add(() => {
         text.isHighlighted = false;
     });
     return text;
 }
 export function gui(scene) {
-    let advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("myUI", true, scene);
-    let button1 = createSceneButton("button1", "Click Me!", "0px", "0px");
+    const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI", true, scene);
+    const button1 = createSceneButton("button1", "Click Me!", "0px", "0px");
     scene.getEngine().setHardwareScalingLevel(1 / window.devicePixelRatio);
     advancedTexture.rootContainer.scaleX = window.devicePixelRatio;
     advancedTexture.rootContainer.scaleY = window.devicePixelRatio;
@@ -54,7 +53,7 @@ export function gui(scene) {
     text2 = createTextBlock("text2", "Debug", "1px", "1px");
     text3 = createTextBlock("text3", "Debug", "1px", "1px");
     text4 = createTextBlock("text4", "Debug", "1px", "1px");
-    const grid = new Grid();
+    const grid = new BABYLON.GUI.Grid();
     grid.addColumnDefinition(100, true);
     grid.addColumnDefinition(0.25);
     grid.addColumnDefinition(0.25);
@@ -63,33 +62,33 @@ export function gui(scene) {
     grid.addColumnDefinition(100, true);
     grid.addRowDefinition(50, true);
     grid.addRowDefinition(50, true);
-    const rect1 = new Rectangle();
+    const rect1 = new BABYLON.GUI.Rectangle();
     rect1.background = "#76d56e88";
     rect1.thickness = 0;
     rect1.addControl(heading1);
-    const rect2 = new Rectangle();
+    const rect2 = new BABYLON.GUI.Rectangle();
     rect2.background = "#60955b88";
     rect2.thickness = 0;
     rect2.addControl(button1);
-    const rect3 = new Rectangle();
+    const rect3 = new BABYLON.GUI.Rectangle();
     rect3.background = "#76d56e88";
     rect3.thickness = 0;
-    const rect4 = new Rectangle();
+    const rect4 = new BABYLON.GUI.Rectangle();
     rect4.background = "#60955b88";
     rect4.thickness = 0;
-    const rect5 = new Rectangle();
+    const rect5 = new BABYLON.GUI.Rectangle();
     rect5.background = "#76d56e88";
     rect5.thickness = 0;
     rect5.addControl(text1);
-    const rect6 = new Rectangle();
+    const rect6 = new BABYLON.GUI.Rectangle();
     rect6.background = "#60955b88";
     rect6.thickness = 0;
     rect6.addControl(text2);
-    const rect7 = new Rectangle();
+    const rect7 = new BABYLON.GUI.Rectangle();
     rect7.background = "#76d56e88";
     rect7.thickness = 0;
     rect7.addControl(text3);
-    const rect8 = new Rectangle();
+    const rect8 = new BABYLON.GUI.Rectangle();
     rect8.background = "#60955b88";
     rect8.thickness = 0;
     rect8.addControl(text4);
@@ -120,5 +119,6 @@ export function setText(newtext, index) {
             text4.text = newtext;
             break;
         default:
+            break;
     }
 }

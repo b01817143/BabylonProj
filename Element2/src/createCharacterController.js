@@ -1,32 +1,28 @@
-import "@babylonjs/loaders/glTF/2.0";
-import "@babylonjs/loaders";
-import { Vector3, MeshBuilder, PhysicsCharacterController, Quaternion, CharacterSupportedState, KeyboardEventTypes, StandardMaterial, Color3, } from "@babylonjs/core";
 export function createCharacterController(scene) {
-    var _a;
     let characterState = "ON_GROUND";
     const inAirSpeed = 8.0;
     const onGroundSpeed = 10;
     const jumpHeight = 1.5;
-    const characterGravity = new Vector3(0, -18, 0);
-    let keyInput = new Vector3(0, 0, 0);
+    const characterGravity = new BABYLON.Vector3(0, -18, 0);
+    let keyInput = new BABYLON.Vector3(0, 0, 0);
     let wantJump = false;
-    let characterOrientation = Quaternion.Identity();
-    let forwardLocalSpace = new Vector3(0, 0, 1);
+    let characterOrientation = BABYLON.Quaternion.Identity();
+    let forwardLocalSpace = new BABYLON.Vector3(0, 0, 1);
     const h = 1.8;
     const r = 0.6;
-    let displayCapsule = MeshBuilder.CreateCapsule("CharacterDisplay", { height: h, radius: r }, scene);
-    displayCapsule.position = new Vector3(0, h / 2, 0);
-    const capsuleMat = new StandardMaterial("capsuleMat", scene);
-    capsuleMat.diffuseColor = new Color3(0.1, 0.7, 0.4);
-    capsuleMat.emissiveColor = new Color3(0.3, 0.1, 0.1);
+    let displayCapsule = BABYLON.MeshBuilder.CreateCapsule("CharacterDisplay", { height: h, radius: r }, scene);
+    displayCapsule.position = new BABYLON.Vector3(0, h / 2, 0);
+    const capsuleMat = new BABYLON.StandardMaterial("capsuleMat", scene);
+    capsuleMat.diffuseColor = new BABYLON.Color3(0.1, 0.7, 0.4);
+    capsuleMat.emissiveColor = new BABYLON.Color3(0.3, 0.1, 0.1);
     displayCapsule.material = capsuleMat;
     console.log("Capsule initial position:", displayCapsule.position);
-    let characterController = new PhysicsCharacterController(displayCapsule.position.clone(), { capsuleHeight: h, capsuleRadius: r }, scene);
+    let characterController = new BABYLON.PhysicsCharacterController(displayCapsule.position.clone(), { capsuleHeight: h, capsuleRadius: r }, scene);
     const getDesiredVelocity = function (deltaTime, supportInfo, currentVelocity) {
-        if (characterState === "ON_GROUND" && supportInfo.supportedState !== CharacterSupportedState.SUPPORTED) {
+        if (characterState === "ON_GROUND" && supportInfo.supportedState !== BABYLON.CharacterSupportedState.SUPPORTED) {
             characterState = "IN_AIR";
         }
-        else if (characterState === "IN_AIR" && supportInfo.supportedState === CharacterSupportedState.SUPPORTED) {
+        else if (characterState === "IN_AIR" && supportInfo.supportedState === BABYLON.CharacterSupportedState.SUPPORTED) {
             characterState = "ON_GROUND";
         }
         if (characterState === "ON_GROUND" && wantJump) {
@@ -42,7 +38,7 @@ export function createCharacterController(scene) {
             let desiredVelocity = keyInput
                 .scale(inAirSpeed)
                 .applyRotationQuaternion(characterOrientation);
-            let outputVelocity = characterController.calculateMovement(deltaTime, forwardWorld, upWorld, currentVelocity, Vector3.ZeroReadOnly, desiredVelocity, upWorld);
+            let outputVelocity = characterController.calculateMovement(deltaTime, forwardWorld, upWorld, currentVelocity, BABYLON.Vector3.ZeroReadOnly, desiredVelocity, upWorld);
             outputVelocity.addInPlace(upWorld.scale(-outputVelocity.dot(upWorld)));
             outputVelocity.addInPlace(upWorld.scale(currentVelocity.dot(upWorld)));
             outputVelocity.addInPlace(characterGravity.scale(deltaTime));
@@ -71,27 +67,29 @@ export function createCharacterController(scene) {
             let curRelVel = currentVelocity.dot(upWorld);
             return currentVelocity.add(upWorld.scale(u - curRelVel));
         }
-        return Vector3.Zero();
+        return BABYLON.Vector3.Zero();
     };
     scene.onBeforeRenderObservable.add(() => {
         displayCapsule.position.copyFrom(characterController.getPosition());
     });
-    (_a = scene.onAfterPhysicsObservable) === null || _a === void 0 ? void 0 : _a.add(() => {
-        if (scene.deltaTime === undefined)
-            return;
-        let dt = scene.deltaTime / 1000.0;
-        if (dt === 0)
-            return;
-        let down = new Vector3(0, -1, 0);
-        let support = characterController.checkSupport(dt, down);
-        let desiredLinearVelocity = getDesiredVelocity(dt, support, characterController.getVelocity());
-        characterController.setVelocity(desiredLinearVelocity);
-        characterController.integrate(dt, support, characterGravity);
-    });
+    if (scene.onAfterPhysicsObservable) {
+        scene.onAfterPhysicsObservable.add(() => {
+            if (scene.deltaTime === undefined)
+                return;
+            let dt = scene.deltaTime / 1000.0;
+            if (dt === 0)
+                return;
+            let down = new BABYLON.Vector3(0, -1, 0);
+            let support = characterController.checkSupport(dt, down);
+            let desiredLinearVelocity = getDesiredVelocity(dt, support, characterController.getVelocity());
+            characterController.setVelocity(desiredLinearVelocity);
+            characterController.integrate(dt, support, characterGravity);
+        });
+    }
     scene.onKeyboardObservable.add((kbInfo) => {
         const key = kbInfo.event.key;
         switch (kbInfo.type) {
-            case KeyboardEventTypes.KEYDOWN:
+            case BABYLON.KeyboardEventTypes.KEYDOWN:
                 if (key === "w" || key === "ArrowUp") {
                     keyInput.z = 1;
                 }
@@ -108,7 +106,7 @@ export function createCharacterController(scene) {
                     wantJump = true;
                 }
                 break;
-            case KeyboardEventTypes.KEYUP:
+            case BABYLON.KeyboardEventTypes.KEYUP:
                 if (key === "w" || key === "s" || key === "ArrowUp" || key === "ArrowDown") {
                     keyInput.z = 0;
                 }
@@ -121,4 +119,5 @@ export function createCharacterController(scene) {
                 break;
         }
     });
+    return characterController;
 }

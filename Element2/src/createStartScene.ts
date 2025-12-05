@@ -1,14 +1,14 @@
-//import "@babylonjs/core/Debug/debugLayer";
-//import "@babylonjs/inspector";
-import "@babylonjs/loaders";
-import HavokPhysics, { HavokPhysicsWithBindings } from "@babylonjs/havok";
-import {
+// Tell TypeScript these globals exist at runtime (from <script> tags)
+declare const BABYLON: any;
+declare const HavokPhysics: any;
+
+// Type-only imports – removed at compile time, just for IntelliSense
+import type {
   Scene,
   ArcRotateCamera,
   AssetsManager,
   Vector3,
   HemisphericLight,
-  MeshBuilder,
   Mesh,
   Camera,
   Engine,
@@ -28,30 +28,28 @@ import {
 // Mesh with an optional physics aggregate attached
 export type PhysicsMesh = Mesh & { physicsAggregate?: PhysicsAggregate };
 
-
 // ----------------------------------------------------
 // LIGHT
 // ----------------------------------------------------
 
 function createLight(scene: Scene) {
-  const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
+  const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
   light.intensity = 0.7;
   return light;
 }
-
 
 // ----------------------------------------------------
 // TERRAIN
 // ----------------------------------------------------
 
 export function createTerrain(scene: Scene) {
-  const largeGroundMat = new StandardMaterial("largeGroundMat", scene);
-  largeGroundMat.diffuseTexture = new Texture(
+  const largeGroundMat = new BABYLON.StandardMaterial("largeGroundMat", scene);
+  largeGroundMat.diffuseTexture = new BABYLON.Texture(
     "./assets/environments/valleygrass.png",
     scene
   );
 
-  const largeGround = MeshBuilder.CreateGroundFromHeightMap(
+  const largeGround = BABYLON.MeshBuilder.CreateGroundFromHeightMap(
     "largeGround",
     "./assets/environments/villageheightmap.png",
     {
@@ -70,59 +68,56 @@ export function createTerrain(scene: Scene) {
   return largeGround;
 }
 
-
 // ----------------------------------------------------
 // GROUND (mesh + physics)
 // ----------------------------------------------------
 
 function createGround(scene: Scene): PhysicsMesh {
-  const groundMaterial = new StandardMaterial("groundMaterial", scene);
-  groundMaterial.diffuseTexture = new Texture("./assets/environments/playergrass.png", scene);
+  const groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
+  groundMaterial.diffuseTexture = new BABYLON.Texture("./assets/environments/playergrass.png", scene);
   groundMaterial.diffuseTexture.hasAlpha = true;
   groundMaterial.backFaceCulling = false;
 
-  const ground = MeshBuilder.CreateGround("ground", { width: 16, height: 16 }, scene);
+  const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 16, height: 16 }, scene);
   ground.material = groundMaterial;
   ground.position.y = 0.01;
 
   // Physics
-  const agg = new PhysicsAggregate(
+  const agg = new BABYLON.PhysicsAggregate(
     ground,
-    PhysicsShapeType.BOX,
+    BABYLON.PhysicsShapeType.BOX,
     { mass: 0 },
     scene
   );
 
- (ground as PhysicsMesh).physicsAggregate = agg;
+  (ground as PhysicsMesh).physicsAggregate = agg;
 
   return ground as PhysicsMesh;
 }
-
 
 // ----------------------------------------------------
 // SKY
 // ----------------------------------------------------
 
 export function createSky(scene: Scene): Mesh {
-  const skybox = MeshBuilder.CreateBox("skyBox", { size: 150 }, scene);
+  const skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 150 }, scene);
 
-  const skyboxMaterial = new StandardMaterial("skyBox", scene);
+  const skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
   skyboxMaterial.backFaceCulling = false;
 
-  skyboxMaterial.reflectionTexture = new CubeTexture(
+  skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture(
     "./assets/textures/skybox/skybox",
     scene
   );
-  skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
+  skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
 
-  skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
-  skyboxMaterial.specularColor = new Color3(0, 0, 0);
+  skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+  skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
 
   skybox.material = skyboxMaterial;
 
   return skybox;
 }
-
 
 // ----------------------------------------------------
 // CAMERA
@@ -132,8 +127,9 @@ function createArcRotateCamera(scene: Scene) {
   let camAlpha = -Math.PI / 2,
     camBeta = Math.PI / 2.5,
     camDist = 25,
-    camTarget = new Vector3(0, 0, 0);
-  let camera = new ArcRotateCamera(
+    camTarget = new BABYLON.Vector3(0, 0, 0);
+
+  let camera: ArcRotateCamera = new BABYLON.ArcRotateCamera(
     "camera1",
     camAlpha,
     camBeta,
@@ -152,21 +148,20 @@ function createArcRotateCamera(scene: Scene) {
   return camera;
 }
 
-
 // ----------------------------------------------------
 // BOXES WITH PHYSICS
 // ----------------------------------------------------
 
 function createBox1(scene: Scene) {
-  let box = MeshBuilder.CreateBox("box1", { width: 1, height: 1 }, scene);
+  let box = BABYLON.MeshBuilder.CreateBox("box1", { width: 1, height: 1 }, scene);
   box.position.set(-1, 3, 1);
 
-  const texture = new StandardMaterial("reflective1", scene);
-  texture.ambientTexture = new Texture("./assets/textures/wood.jpg", scene);
+  const texture = new BABYLON.StandardMaterial("reflective1", scene);
+  texture.ambientTexture = new BABYLON.Texture("./assets/textures/wood.jpg", scene);
   box.material = texture;
 
-  let boxAgg = new PhysicsAggregate(
-    box, PhysicsShapeType.BOX,
+  let boxAgg = new BABYLON.PhysicsAggregate(
+    box, BABYLON.PhysicsShapeType.BOX,
     { mass: 0.2, restitution: 0.1, friction: 0.4 },
     scene
   );
@@ -176,15 +171,15 @@ function createBox1(scene: Scene) {
 }
 
 function createBox2(scene: Scene) {
-  let box = MeshBuilder.CreateBox("box2", { width: 1, height: 1 }, scene);
+  let box = BABYLON.MeshBuilder.CreateBox("box2", { width: 1, height: 1 }, scene);
   box.position.set(-0.7, 5, 1);
 
-  const texture = new StandardMaterial("reflective2", scene);
-  texture.ambientTexture = new Texture("./assets/textures/wood.jpg", scene);
+  const texture = new BABYLON.StandardMaterial("reflective2", scene);
+  texture.ambientTexture = new BABYLON.Texture("./assets/textures/wood.jpg", scene);
   box.material = texture;
 
-  let boxAgg = new PhysicsAggregate(
-    box, PhysicsShapeType.BOX,
+  let boxAgg = new BABYLON.PhysicsAggregate(
+    box, BABYLON.PhysicsShapeType.BOX,
     { mass: 0.2, restitution: 0.1, friction: 0.4 },
     scene
   );
@@ -194,15 +189,15 @@ function createBox2(scene: Scene) {
 }
 
 function createBox3(scene: Scene) {
-  let box = MeshBuilder.CreateBox("box3", { width: 1, height: 1 }, scene);
+  let box = BABYLON.MeshBuilder.CreateBox("box3", { width: 1, height: 1 }, scene);
   box.position.set(-0.7, 5, 1);
 
-  const texture = new StandardMaterial("reflective3", scene);
-  texture.ambientTexture = new Texture("./assets/textures/wood.jpg", scene);
+  const texture = new BABYLON.StandardMaterial("reflective3", scene);
+  texture.ambientTexture = new BABYLON.Texture("./assets/textures/wood.jpg", scene);
   box.material = texture;
 
-  let boxAgg = new PhysicsAggregate(
-    box, PhysicsShapeType.BOX,
+  let boxAgg = new BABYLON.PhysicsAggregate(
+    box, BABYLON.PhysicsShapeType.BOX,
     { mass: 0.2, restitution: 0.1, friction: 0.4 },
     scene
   );
@@ -212,15 +207,15 @@ function createBox3(scene: Scene) {
 }
 
 function createBox4(scene: Scene) {
-  let box = MeshBuilder.CreateBox("box4", { width: 1, height: 1 }, scene);
+  let box = BABYLON.MeshBuilder.CreateBox("box4", { width: 1, height: 1 }, scene);
   box.position.set(-0.7, 5, 1);
 
-  const texture = new StandardMaterial("reflective4", scene);
-  texture.ambientTexture = new Texture("./assets/textures/wood.jpg", scene);
+  const texture = new BABYLON.StandardMaterial("reflective4", scene);
+  texture.ambientTexture = new BABYLON.Texture("./assets/textures/wood.jpg", scene);
   box.material = texture;
 
-  let boxAgg = new PhysicsAggregate(
-    box, PhysicsShapeType.BOX,
+  let boxAgg = new BABYLON.PhysicsAggregate(
+    box, BABYLON.PhysicsShapeType.BOX,
     { mass: 0.2, restitution: 0.1, friction: 0.4 },
     scene
   );
@@ -234,111 +229,110 @@ function createBox4(scene: Scene) {
 // ----------------------------------------------------
 
 function addAssets(scene: Scene) {
-  const assetsManager = new AssetsManager(scene);
+  const assetsManager: AssetsManager = new BABYLON.AssetsManager(scene);
 
   // Tree 1
-const tree1 = assetsManager.addMeshTask(
-  "tree1 task",
-  "",
-  "./assets/nature/gltf/",
-  "CommonTree_1.gltf"
-);
+  const tree1 = assetsManager.addMeshTask(
+    "tree1 task",
+    "",
+    "./assets/nature/gltf/",
+    "CommonTree_1.gltf"
+  );
 
-tree1.onSuccess = function (task) {
-  const root = task.loadedMeshes[0];
-  root.position = new Vector3(3, 0, 2);
-  root.scaling = new Vector3(0.5, 0.5, 0.5);
-  task.loadedMeshes.forEach(mesh => (mesh.isVisible = true));
+  tree1.onSuccess = function (task) {
+    const root = task.loadedMeshes[0];
+    root.position = new BABYLON.Vector3(3, 0, 2);
+    root.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+    task.loadedMeshes.forEach(mesh => (mesh.isVisible = true));
 
-  const clone = root.clone("tree1_clone", null, true);
-  clone!.position = new Vector3(0, 0, 5);
-};
+    const clone = root.clone("tree1_clone", null, true);
+    clone!.position = new BABYLON.Vector3(0, 0, 5);
+  };
 
-// Tree 2
-const tree2 = assetsManager.addMeshTask(
-  "tree2 task",
-  "",
-  "./assets/nature/gltf/",
-  "CommonTree_2.gltf"
-);
+  // Tree 2
+  const tree2 = assetsManager.addMeshTask(
+    "tree2 task",
+    "",
+    "./assets/nature/gltf/",
+    "CommonTree_2.gltf"
+  );
 
-tree2.onSuccess = function (task) {
-  const root = task.loadedMeshes[0];
-  root.position = new Vector3(0, 0, 2);
-  root.scaling = new Vector3(0.5, 0.5, 0.5);
+  tree2.onSuccess = function (task) {
+    const root = task.loadedMeshes[0];
+    root.position = new BABYLON.Vector3(0, 0, 2);
+    root.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
 
-  const clone = root.clone("tree2_clone", null, true);
-  clone!.position = new Vector3(-3, 0, 5);
-};
+    const clone = root.clone("tree2_clone", null, true);
+    clone!.position = new BABYLON.Vector3(-3, 0, 5);
+  };
 
-// Tree 3
-const tree3 = assetsManager.addMeshTask(
-  "tree3 task",
-  "",
-  "./assets/nature/gltf/",
-  "CommonTree_3.gltf"
-);
+  // Tree 3
+  const tree3 = assetsManager.addMeshTask(
+    "tree3 task",
+    "",
+    "./assets/nature/gltf/",
+    "CommonTree_3.gltf"
+  );
 
-tree3.onSuccess = function (task) {
-  const root = task.loadedMeshes[0];
-  root.position = new Vector3(-3, 0, 2);
-  root.scaling = new Vector3(0.5, 0.5, 0.5);
+  tree3.onSuccess = function (task) {
+    const root = task.loadedMeshes[0];
+    root.position = new BABYLON.Vector3(-3, 0, 2);
+    root.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
 
-  const clone = root.clone("tree3_clone", null, true);
-  clone!.position = new Vector3(3, 0, 5);
-};
+    const clone = root.clone("tree3_clone", null, true);
+    clone!.position = new BABYLON.Vector3(3, 0, 5);
+  };
 
-// Tree 4
-const tree4 = assetsManager.addMeshTask(
-  "tree4 task",
-  "",
-  "./assets/nature/gltf/",
-  "CommonTree_1.gltf"
-);
+  // Tree 4
+  const tree4 = assetsManager.addMeshTask(
+    "tree4 task",
+    "",
+    "./assets/nature/gltf/",
+    "CommonTree_1.gltf"
+  );
 
-tree4.onSuccess = function (task) {
-  const root = task.loadedMeshes[0];
-  root.position = new Vector3(3, 0, -2);
-  root.scaling = new Vector3(0.5, 0.5, 0.5);
+  tree4.onSuccess = function (task) {
+    const root = task.loadedMeshes[0];
+    root.position = new BABYLON.Vector3(3, 0, -2);
+    root.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
 
-  const clone = root.clone("tree4_clone", null, true);
-  clone!.position = new Vector3(0, 0, -5);
-};
+    const clone = root.clone("tree4_clone", null, true);
+    clone!.position = new BABYLON.Vector3(0, 0, -5);
+  };
 
-// Tree 5
-const tree5 = assetsManager.addMeshTask(
-  "tree5 task",
-  "",
-  "./assets/nature/gltf/",
-  "CommonTree_2.gltf"
-);
+  // Tree 5
+  const tree5 = assetsManager.addMeshTask(
+    "tree5 task",
+    "",
+    "./assets/nature/gltf/",
+    "CommonTree_2.gltf"
+  );
 
-tree5.onSuccess = function (task) {
-  const root = task.loadedMeshes[0];
-  root.position = new Vector3(0, 0, -2);
-  root.scaling = new Vector3(0.5, 0.5, 0.5);
+  tree5.onSuccess = function (task) {
+    const root = task.loadedMeshes[0];
+    root.position = new BABYLON.Vector3(0, 0, -2);
+    root.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
 
-  const clone = root.clone("tree5_clone", null, true);
-  clone!.position = new Vector3(-3, 0, -5);
-};
+    const clone = root.clone("tree5_clone", null, true);
+    clone!.position = new BABYLON.Vector3(-3, 0, -5);
+  };
 
-// Tree 6
-const tree6 = assetsManager.addMeshTask(
-  "tree6 task",
-  "",
-  "./assets/nature/gltf/",
-  "CommonTree_3.gltf"
-);
+  // Tree 6
+  const tree6 = assetsManager.addMeshTask(
+    "tree6 task",
+    "",
+    "./assets/nature/gltf/",
+    "CommonTree_3.gltf"
+  );
 
-tree6.onSuccess = function (task) {
-  const root = task.loadedMeshes[0];
-  root.position = new Vector3(-3, 0, -2);
-  root.scaling = new Vector3(0.5, 0.5, 0.5);
+  tree6.onSuccess = function (task) {
+    const root = task.loadedMeshes[0];
+    root.position = new BABYLON.Vector3(-3, 0, -2);
+    root.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
 
-  const clone = root.clone("tree6_clone", null, true);
-  clone!.position = new Vector3(3, 0, -5);
-};
-
+    const clone = root.clone("tree6_clone", null, true);
+    clone!.position = new BABYLON.Vector3(3, 0, -5);
+  };
 
   assetsManager.onTaskErrorObservable.add(task =>
     console.log("task failed", task.errorObject.message)
@@ -347,13 +341,11 @@ tree6.onSuccess = function (task) {
   return assetsManager;
 }
 
-
 // ----------------------------------------------------
 // MAIN SCENE CREATION
 // ----------------------------------------------------
 
 export default async function createStartScene(engine: Engine) {
-
   interface SceneData {
     scene: Scene;
     light?: HemisphericLight;
@@ -366,12 +358,12 @@ export default async function createStartScene(engine: Engine) {
     skybox?: Mesh;
   }
 
-  let that: SceneData = { scene: new Scene(engine) };
+  let that: SceneData = { scene: new BABYLON.Scene(engine) };
 
-  // Init physics
-  const havokInstance: HavokPhysicsWithBindings = await HavokPhysics();
-  const hk: HavokPlugin = new HavokPlugin(true, havokInstance);
-  that.scene.enablePhysics(new Vector3(0, -9.81, 0), hk);
+  // Init physics (HavokPhysics is global from its script)
+  const havokInstance = await HavokPhysics();
+  const hk: HavokPlugin = new BABYLON.HavokPlugin(true, havokInstance);
+  that.scene.enablePhysics(new BABYLON.Vector3(0, -9.81, 0), hk);
 
   // Scene setup
   that.skybox = createSky(that.scene);
@@ -381,7 +373,7 @@ export default async function createStartScene(engine: Engine) {
   that.camera = createArcRotateCamera(that.scene);
   that.box1 = createBox1(that.scene);
   that.box2 = createBox2(that.scene);
-   that.box3 = createBox3(that.scene);
+  that.box3 = createBox3(that.scene);
   that.box4 = createBox4(that.scene);
 
   const assetsManager = addAssets(that.scene);

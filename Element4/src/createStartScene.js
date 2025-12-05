@@ -1,13 +1,7 @@
-import { Scene, ArcRotateCamera, Vector3, MeshBuilder, Mesh, StandardMaterial, HemisphericLight, Color3, Texture, CubeTexture, Vector4, SpriteManager, Sprite, } from "@babylonjs/core";
 function createTerrain(scene) {
-    const largeGroundMat = new StandardMaterial("largeGroundMat");
-    largeGroundMat.diffuseTexture = new Texture("./assets/environments/valleygrass.png");
-    function createLight(scene) {
-        const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
-        light.intensity = 0.7;
-        return light;
-    }
-    const largeGround = MeshBuilder.CreateGroundFromHeightMap("largeGround", "./assets/environments/villageheightmap.png", {
+    const largeGroundMat = new BABYLON.StandardMaterial("largeGroundMat", scene);
+    largeGroundMat.diffuseTexture = new BABYLON.Texture("./assets/environments/valleygrass.png", scene);
+    const largeGround = BABYLON.MeshBuilder.CreateGroundFromHeightMap("largeGround", "./assets/environments/villageheightmap.png", {
         width: 150,
         height: 150,
         subdivisions: 20,
@@ -18,56 +12,57 @@ function createTerrain(scene) {
     largeGround.position.y = -0.01;
 }
 function createGround(scene) {
-    const groundMaterial = new StandardMaterial("groundMaterial");
-    groundMaterial.diffuseTexture = new Texture("./assets/environments/villagegreen.png");
+    const groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
+    groundMaterial.diffuseTexture = new BABYLON.Texture("./assets/environments/villagegreen.png", scene);
     groundMaterial.diffuseTexture.hasAlpha = true;
     groundMaterial.backFaceCulling = false;
-    const ground = MeshBuilder.CreateGround("ground", { width: 24, height: 24 }, scene);
+    const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 24, height: 24 }, scene);
     ground.material = groundMaterial;
     ground.position.y = 0.01;
     return ground;
 }
 function createSky(scene) {
-    const skybox = MeshBuilder.CreateBox("skyBox", { size: 150 }, scene);
-    const skyboxMaterial = new StandardMaterial("skyBox", scene);
+    const skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 150 }, scene);
+    const skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
     skyboxMaterial.backFaceCulling = false;
-    skyboxMaterial.reflectionTexture = new CubeTexture("./assets/textures/skybox/skybox", scene);
-    skyboxMaterial.reflectionTexture.coordinatesMode = Texture.SKYBOX_MODE;
-    skyboxMaterial.diffuseColor = new Color3(0, 0, 0);
-    skyboxMaterial.specularColor = new Color3(0, 0, 0);
+    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("./assets/textures/skybox/skybox", scene);
+    skyboxMaterial.reflectionTexture.coordinatesMode =
+        BABYLON.Texture.SKYBOX_MODE;
+    skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+    skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
     skybox.material = skyboxMaterial;
     return skybox;
 }
 function createBox(style) {
-    const boxMat = new StandardMaterial("boxMat");
+    const boxMat = new BABYLON.StandardMaterial("boxMat");
     const faceUV = [];
-    if (style == 1) {
-        boxMat.diffuseTexture = new Texture("./assets/textures/cubehouse.png");
-        faceUV[0] = new Vector4(0.5, 0.0, 0.75, 1.0);
-        faceUV[1] = new Vector4(0.0, 0.0, 0.25, 1.0);
-        faceUV[2] = new Vector4(0.25, 0, 0.5, 1.0);
-        faceUV[3] = new Vector4(0.75, 0, 1.0, 1.0);
+    if (style === 1) {
+        boxMat.diffuseTexture = new BABYLON.Texture("./assets/textures/cubehouse.png");
+        faceUV[0] = new BABYLON.Vector4(0.5, 0.0, 0.75, 1.0);
+        faceUV[1] = new BABYLON.Vector4(0.0, 0.0, 0.25, 1.0);
+        faceUV[2] = new BABYLON.Vector4(0.25, 0.0, 0.5, 1.0);
+        faceUV[3] = new BABYLON.Vector4(0.75, 0.0, 1.0, 1.0);
     }
     else {
-        boxMat.diffuseTexture = new Texture("./assets/textures/semihouse.png");
-        faceUV[0] = new Vector4(0.6, 0.0, 1.0, 1.0);
-        faceUV[1] = new Vector4(0.0, 0.0, 0.4, 1.0);
-        faceUV[2] = new Vector4(0.4, 0, 0.6, 1.0);
-        faceUV[3] = new Vector4(0.4, 0, 0.6, 1.0);
+        boxMat.diffuseTexture = new BABYLON.Texture("./assets/textures/semihouse.png");
+        faceUV[0] = new BABYLON.Vector4(0.6, 0.0, 1.0, 1.0);
+        faceUV[1] = new BABYLON.Vector4(0.0, 0.0, 0.4, 1.0);
+        faceUV[2] = new BABYLON.Vector4(0.4, 0.0, 0.6, 1.0);
+        faceUV[3] = new BABYLON.Vector4(0.4, 0.0, 0.6, 1.0);
     }
-    const box = MeshBuilder.CreateBox("box", {
+    const box = BABYLON.MeshBuilder.CreateBox("box", {
         width: style,
         height: 1,
-        faceUV: faceUV,
+        faceUV,
         wrap: true,
     });
-    box.position = new Vector3(0, 0.5, 0);
-    box.scaling = new Vector3(1, 1, 1);
+    box.position = new BABYLON.Vector3(0, 0.5, 0);
+    box.scaling = new BABYLON.Vector3(1, 1, 1);
     box.material = boxMat;
     return box;
 }
 function createRoof(style) {
-    const roof = MeshBuilder.CreateCylinder("roof", {
+    const roof = BABYLON.MeshBuilder.CreateCylinder("roof", {
         diameter: 1.3,
         height: 1.2,
         tessellation: 3,
@@ -76,25 +71,27 @@ function createRoof(style) {
     roof.scaling.y = style * 0.85;
     roof.rotation.z = Math.PI / 2;
     roof.position.y = 1.22;
-    const roofMat = new StandardMaterial("roofMat");
-    roofMat.diffuseTexture = new Texture("./assets/textures/roof.jpg");
+    const roofMat = new BABYLON.StandardMaterial("roofMat");
+    roofMat.diffuseTexture = new BABYLON.Texture("./assets/textures/roof.jpg");
     roof.material = roofMat;
     return roof;
 }
 function createHouse(scene, style) {
     const box = createBox(style);
     const roof = createRoof(style);
-    const house = Mesh.MergeMeshes([box, roof], true, false, undefined, false, true);
+    const house = BABYLON.Mesh.MergeMeshes([box, roof], true, false, undefined, false, true);
     return house;
 }
 function createHouses(scene, style) {
-    if (style == 1) {
+    if (style === 1) {
         createHouse(scene, 1);
+        return;
     }
-    if (style == 2) {
+    if (style === 2) {
         createHouse(scene, 2);
+        return;
     }
-    if (style == 3) {
+    if (style === 3) {
         const houses = [];
         houses[0] = createHouse(scene, 1);
         houses[0].rotation.y = -Math.PI / 16;
@@ -135,43 +132,43 @@ function createHouses(scene, style) {
     }
 }
 function createTrees(scene) {
-    const spriteManagerTrees = new SpriteManager("treesManager", "./assets/sprites/tree.png", 2000, { width: 512, height: 1024 }, scene);
+    const spriteManagerTrees = new BABYLON.SpriteManager("treesManager", "./assets/sprites/tree.png", 2000, { width: 512, height: 1024 }, scene);
     for (let i = 0; i < 500; i++) {
-        const tree = new Sprite("tree", spriteManagerTrees);
+        const tree = new BABYLON.Sprite("tree", spriteManagerTrees);
         tree.position.x = Math.random() * -30;
         tree.position.z = Math.random() * 20 + 8;
         tree.position.y = 0.2;
     }
     for (let i = 0; i < 500; i++) {
-        const tree = new Sprite("tree", spriteManagerTrees);
+        const tree = new BABYLON.Sprite("tree", spriteManagerTrees);
         tree.position.x = Math.random() * 30;
         tree.position.z = Math.random() * 20 + 8;
         tree.position.y = 0.2;
     }
     for (let i = 0; i < 500; i++) {
-        const tree = new Sprite("tree", spriteManagerTrees);
+        const tree = new BABYLON.Sprite("tree", spriteManagerTrees);
         tree.position.x = Math.random() * -30;
         tree.position.z = Math.random() * -50 + -3;
         tree.position.y = 0.2;
     }
     for (let i = 0; i < 500; i++) {
-        const tree = new Sprite("tree", spriteManagerTrees);
+        const tree = new BABYLON.Sprite("tree", spriteManagerTrees);
         tree.position.x = Math.random() * 90;
         tree.position.z = Math.random() * -25 + 5;
         tree.position.y = 0.2;
     }
 }
 function createHemisphericLight(scene) {
-    const light = new HemisphericLight("light", new Vector3(2, 1, 0), scene);
+    const light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(2, 1, 0), scene);
     light.intensity = 50.8;
-    light.diffuse = new Color3(1, 1, 1);
-    light.specular = new Color3(1, 0.8, 0.8);
-    light.groundColor = new Color3(0, 0.2, 0.7);
+    light.diffuse = new BABYLON.Color3(1, 1, 1);
+    light.specular = new BABYLON.Color3(1, 0.8, 0.8);
+    light.groundColor = new BABYLON.Color3(0, 0.2, 0.7);
     return light;
 }
 function createArcRotateCamera(scene) {
-    let camAlpha = -Math.PI / 2, camBeta = Math.PI / 2.5, camDist = 25, camTarget = new Vector3(0, 0, 0);
-    let camera = new ArcRotateCamera("camera1", camAlpha, camBeta, camDist, camTarget, scene);
+    let camAlpha = -Math.PI / 2, camBeta = Math.PI / 2.5, camDist = 25, camTarget = new BABYLON.Vector3(0, 0, 0);
+    const camera = new BABYLON.ArcRotateCamera("camera1", camAlpha, camBeta, camDist, camTarget, scene);
     camera.lowerRadiusLimit = 9;
     camera.upperRadiusLimit = 25;
     camera.lowerAlphaLimit = 0;
@@ -182,15 +179,15 @@ function createArcRotateCamera(scene) {
     return camera;
 }
 export default function createStartScene(engine) {
-    let scene = new Scene(engine);
-    let ground = createGround(scene);
-    let sky = createSky(scene);
-    let lightHemispheric = createHemisphericLight(scene);
+    const scene = new BABYLON.Scene(engine);
+    const ground = createGround(scene);
+    const sky = createSky(scene);
+    const lightHemispheric = createHemisphericLight(scene);
     createHouses(scene, 3);
     createTrees(scene);
     createTerrain(scene);
-    let camera = createArcRotateCamera(scene);
-    let that = {
+    const camera = createArcRotateCamera(scene);
+    const that = {
         scene,
         ground,
         sky,

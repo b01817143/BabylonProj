@@ -1,9 +1,8 @@
-import {} from "@babylonjs/core";
+import type { SceneData } from "./interfaces.js";
 
-import { SceneData } from "./interfaces.js";
-
-export default function createRunScene(runScene: SceneData) {
- 
-
-  runScene.scene.onAfterRenderObservable.add(() => {});
+export default function createRunScene(runScene: SceneData): void {
+  // Hook for any per-frame logic in the run scene
+  runScene.scene.onAfterRenderObservable.add(() => {
+    // e.g. update UI, handle game state, etc.
+  });
 }

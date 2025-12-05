@@ -1,4 +1,5 @@
-import {
+// interfaces.ts
+import type {
   Scene,
   Mesh,
   HemisphericLight,

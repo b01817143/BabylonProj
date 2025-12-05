@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Village Environment</title>
-    </head>
-    <body>
-  <canvas id="renderCanvas"></canvas>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Village Environment</title>
 
-  <!-- 1) Map @babylonjs/* and tslib to real CDN URLs -->
-  <script type="importmap">
-  {
-    "imports": {
-      "@babylonjs/core": "https://cdn.jsdelivr.net/npm/@babylonjs/core@8.39.2/+esm",
-      "@babylonjs/loaders": "https://cdn.jsdelivr.net/npm/@babylonjs/loaders@8.39.2/+esm",
-      "@babylonjs/materials": "https://cdn.jsdelivr.net/npm/@babylonjs/materials@8.39.2/+esm",
-      "tslib": "https://cdn.jsdelivr.net/npm/tslib@2.8.1/tslib.es6.mjs"
-    }
-  }
-  </script>
+    <!-- If you have styles for this element -->
+    <link rel="stylesheet" href="./src/main.css" />
+  </head>
+  <body>
+    <!-- No canvas here; Element4's index.ts creates it dynamically -->
 
-  <!-- 2) Then load your compiled JS as a module -->
-  <script type="module" src="./src/index.js"></script>
-</body>
+    <!-- Babylon core -->
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+
+    <!-- Sprites (used by SpriteManager / Sprite in createTrees) -->
+    <script src="https://cdn.babylonjs.com/sprites/babylon.sprites.min.js"></script>
+
+    <!-- Your compiled TypeScript entry point -->
+    <script type="module" src="./src/index.js"></script>
+  </body>
 </html>
