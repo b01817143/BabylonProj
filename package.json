@@ -1,0 +1,21 @@
+{
+  "name": "testproj",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc && vite build",
+    "preview": "vite preview --host"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3",
+    "vite": "^7.1.12"
+  },
+  "dependencies": {
+    "@babylonjs/gui": "^8.40.0",
+    "@babylonjs/havok": "^1.3.10",
+    "@babylonjs/loaders": "^8.40.0",
+    "@babylonjs/materials": "^8.40.0"
+  }
+}
