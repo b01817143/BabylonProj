@@ -4,14 +4,22 @@
         <meta charset="UTF-8">
         <title>Meshes01</title>
     </head>
-    <body> </body>
+      <body>
+  <canvas id="renderCanvas"></canvas>
+
+  <!-- 1) Map @babylonjs/* and tslib to real CDN URLs -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@babylonjs/core": "https://cdn.jsdelivr.net/npm/@babylonjs/core@8.39.2/+esm",
+      "@babylonjs/loaders": "https://cdn.jsdelivr.net/npm/@babylonjs/loaders@8.39.2/+esm",
+      "@babylonjs/materials": "https://cdn.jsdelivr.net/npm/@babylonjs/materials@8.39.2/+esm",
+      "tslib": "https://cdn.jsdelivr.net/npm/tslib@2.8.1/tslib.es6.mjs"
+    }
+  }
+  </script>
+
+  <!-- 2) Then load your compiled JS as a module -->
+  <script type="module" src="./src/index.js"></script>
+</body>
 </html>
-<!-- Babylon.js core -->
-  <script src="https://cdn.babylonjs.com/babylon.js"></script>
-
-  <!-- Babylon.js GUI -->
-  <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
-
-  <!-- Babylon.js Havok (optional, if you need physics) -->
-  <script src="https://cdn.babylonjs.com/havok/babylon.havok.js"></script>
-<script type="module" src="./src/index.s"></script>
