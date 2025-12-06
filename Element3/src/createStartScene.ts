@@ -282,7 +282,7 @@ function addAssets(scene: Scene) {
   const tree1 = assetsManager.addMeshTask(
     "tree1 task",
     "",
-    "./assets/nature/gltf/",
+    "./assets/nature/",
     "CommonTree_1.gltf"
   );
 
@@ -300,7 +300,7 @@ function addAssets(scene: Scene) {
   const tree2 = assetsManager.addMeshTask(
     "tree2 task",
     "",
-    "./assets/nature/gltf/",
+    "./assets/nature/",
     "CommonTree_2.gltf"
   );
 
@@ -317,7 +317,7 @@ function addAssets(scene: Scene) {
   const tree3 = assetsManager.addMeshTask(
     "tree3 task",
     "",
-    "./assets/nature/gltf/",
+    "./assets/nature/",
     "CommonTree_3.gltf"
   );
 
@@ -334,7 +334,7 @@ function addAssets(scene: Scene) {
   const tree4 = assetsManager.addMeshTask(
     "tree4 task",
     "",
-    "./assets/nature/gltf/",
+    "./assets/nature/",
     "CommonTree_1.gltf"
   );
 
@@ -351,7 +351,7 @@ function addAssets(scene: Scene) {
   const tree5 = assetsManager.addMeshTask(
     "tree5 task",
     "",
-    "./assets/nature/gltf/",
+    "./assets/nature/",
     "CommonTree_2.gltf"
   );
 
@@ -368,7 +368,7 @@ function addAssets(scene: Scene) {
   const tree6 = assetsManager.addMeshTask(
     "tree6 task",
     "",
-    "./assets/nature/gltf/",
+    "./assets/nature/",
     "CommonTree_3.gltf"
   );
 

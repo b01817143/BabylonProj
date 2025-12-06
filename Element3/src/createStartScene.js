@@ -104,7 +104,7 @@ function createBox4(scene) {
 }
 function addAssets(scene) {
     const assetsManager = new BABYLON.AssetsManager(scene);
-    const tree1 = assetsManager.addMeshTask("tree1 task", "", "./assets/nature/gltf/", "CommonTree_1.gltf");
+    const tree1 = assetsManager.addMeshTask("tree1 task", "", "./assets/nature/", "CommonTree_1.gltf");
     tree1.onSuccess = function (task) {
         const root = task.loadedMeshes[0];
         root.position = new BABYLON.Vector3(3, 0, 2);
@@ -113,7 +113,7 @@ function addAssets(scene) {
         const clone = root.clone("tree1_clone", null, true);
         clone.position = new BABYLON.Vector3(0, 0, 5);
     };
-    const tree2 = assetsManager.addMeshTask("tree2 task", "", "./assets/nature/gltf/", "CommonTree_2.gltf");
+    const tree2 = assetsManager.addMeshTask("tree2 task", "", "./assets/nature/", "CommonTree_2.gltf");
     tree2.onSuccess = function (task) {
         const root = task.loadedMeshes[0];
         root.position = new BABYLON.Vector3(0, 0, 2);
@@ -121,7 +121,7 @@ function addAssets(scene) {
         const clone = root.clone("tree2_clone", null, true);
         clone.position = new BABYLON.Vector3(-3, 0, 5);
     };
-    const tree3 = assetsManager.addMeshTask("tree3 task", "", "./assets/nature/gltf/", "CommonTree_3.gltf");
+    const tree3 = assetsManager.addMeshTask("tree3 task", "", "./assets/nature/", "CommonTree_3.gltf");
     tree3.onSuccess = function (task) {
         const root = task.loadedMeshes[0];
         root.position = new BABYLON.Vector3(-3, 0, 2);
@@ -129,7 +129,7 @@ function addAssets(scene) {
         const clone = root.clone("tree3_clone", null, true);
         clone.position = new BABYLON.Vector3(3, 0, 5);
     };
-    const tree4 = assetsManager.addMeshTask("tree4 task", "", "./assets/nature/gltf/", "CommonTree_1.gltf");
+    const tree4 = assetsManager.addMeshTask("tree4 task", "", "./assets/nature/", "CommonTree_1.gltf");
     tree4.onSuccess = function (task) {
         const root = task.loadedMeshes[0];
         root.position = new BABYLON.Vector3(3, 0, -2);
@@ -137,7 +137,7 @@ function addAssets(scene) {
         const clone = root.clone("tree4_clone", null, true);
         clone.position = new BABYLON.Vector3(0, 0, -5);
     };
-    const tree5 = assetsManager.addMeshTask("tree5 task", "", "./assets/nature/gltf/", "CommonTree_2.gltf");
+    const tree5 = assetsManager.addMeshTask("tree5 task", "", "./assets/nature/", "CommonTree_2.gltf");
     tree5.onSuccess = function (task) {
         const root = task.loadedMeshes[0];
         root.position = new BABYLON.Vector3(0, 0, -2);
@@ -145,7 +145,7 @@ function addAssets(scene) {
         const clone = root.clone("tree5_clone", null, true);
         clone.position = new BABYLON.Vector3(-3, 0, -5);
     };
-    const tree6 = assetsManager.addMeshTask("tree6 task", "", "./assets/nature/gltf/", "CommonTree_3.gltf");
+    const tree6 = assetsManager.addMeshTask("tree6 task", "", "./assets/nature/", "CommonTree_3.gltf");
     tree6.onSuccess = function (task) {
         const root = task.loadedMeshes[0];
         root.position = new BABYLON.Vector3(-3, 0, -2);
