@@ -318,6 +318,7 @@ function createArcRotateCamera(scene: Scene) {
 // MAIN SCENE CREATION
 // ----------------------------------------------------
 
+
 export default function createStartScene(engine: Engine): SceneData {
   const scene: Scene = new BABYLON.Scene(engine);
 
