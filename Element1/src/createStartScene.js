@@ -50,7 +50,7 @@ function createArcRotateCamera(scene) {
 }
 function addAssets(scene) {
     const assetsManager = new BABYLON.AssetsManager(scene);
-    const tree1 = assetsManager.addMeshTask("tree1 task", "", "./assets/nature/gltf/", "CommonTree_1.gltf");
+    const tree1 = assetsManager.addMeshTask("tree1 task", "", "./assets/nature/", "CommonTree_1.gltf");
     tree1.onSuccess = function (task) {
         task.loadedMeshes[0].position = new BABYLON.Vector3(3, 0, 2);
         task.loadedMeshes[0].scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
@@ -59,7 +59,7 @@ function addAssets(scene) {
             tree1Clone.position = new BABYLON.Vector3(0, 0, 5);
         }
     };
-    const tree2 = assetsManager.addMeshTask("tree2 task", "", "./assets/nature/gltf/", "CommonTree_2.gltf");
+    const tree2 = assetsManager.addMeshTask("tree2 task", "", "./assets/nature/", "CommonTree_2.gltf");
     tree2.onSuccess = function (task) {
         task.loadedMeshes[0].position = new BABYLON.Vector3(0, 0, 2);
         task.loadedMeshes[0].scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
@@ -68,7 +68,7 @@ function addAssets(scene) {
             tree2Clone.position = new BABYLON.Vector3(-3, 0, 5);
         }
     };
-    const tree3 = assetsManager.addMeshTask("tree3 task", "", "./assets/nature/gltf/", "CommonTree_3.gltf");
+    const tree3 = assetsManager.addMeshTask("tree3 task", "", "./assets/nature/", "CommonTree_3.gltf");
     tree3.onSuccess = function (task) {
         task.loadedMeshes[0].position = new BABYLON.Vector3(-3, 0, 2);
         task.loadedMeshes[0].scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);

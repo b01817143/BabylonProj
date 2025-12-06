@@ -152,7 +152,7 @@ function addAssets(scene: Scene): AssetsManager {
   const tree2 = assetsManager.addMeshTask(
     "tree2 task",
     "",
-    "./assets/nature/gltf/",
+    "./assets/nature/",
     "CommonTree_2.gltf"
   );
   tree2.onSuccess = function (task) {
